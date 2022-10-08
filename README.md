@@ -251,8 +251,15 @@ exemplo, DEFAULT, APP_BANK, APP_STORE. Assim ao receber o request para saber se 
 valida, poderiamos receber tambem um header que nós dirá qual a configuração que vai ser acessada
 no banco de dados, para saber quais serão as validações aceitas para esse cenario.
 - Utilização do redis para se trabalhar com cache e evitar que o usuario envie a mesma senha por diversas vezes,
-derubando servidor.
+derrubando servidor.
 
+## Apêndice
+- Segundo algumas obras da literatura, como o livro Java Efetivo de Joshua Bloch,
+exceções não devem ser utilizadas para controle de fluxo. Na verdade a um grande 
+debate sobre o tema, e até onde uma exceção deve ser usada, Joshua Bloch diz
+que uma exceção deve ser usada apenas em um caso excepcional. Ao meu ver,
+ao ferir uma validação, uma regra de negocio, faz sentido que uma exceção seja lançada, 
+entretanto esse pensamento pode mudar de desenvolvedor para desenvolvedor.
 
 ## Tecnologias
 
