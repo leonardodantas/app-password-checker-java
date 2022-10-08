@@ -2,11 +2,9 @@ package com.br.app.validation.domains;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,6 +15,7 @@ public class Password {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
+    @Column(length = 80)
     private String password;
     private boolean isValid;
     private LocalDateTime create;
@@ -35,11 +34,7 @@ public class Password {
         return new Password(password);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public Password valid() {
-        return new Password(this.password, true, LocalDateTime.now());
+        return new Password(new BCryptPasswordEncoder().encode(this.password), true, LocalDateTime.now());
     }
 }

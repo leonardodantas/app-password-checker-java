@@ -13,10 +13,17 @@ public class ValidatorsChainBeans {
         return new ShouldNotContainRepeatingCharacters();
     }
 
+    @Bean("shouldNotContainEmptySpaces")
+    public ShouldNotContainEmptySpaces shouldNotContainEmptySpaces(final ShouldNotContainRepeatingCharacters shouldNotContainRepeatingCharacters) {
+        final var shouldNotContainEmptySpaces = new ShouldNotContainEmptySpaces();
+        shouldNotContainEmptySpaces.next(shouldNotContainRepeatingCharacters);
+        return shouldNotContainEmptySpaces;
+    }
+
     @Bean("containsAtLeastOneSpecialCharacter")
-    public ContainsAtLeastOneSpecialCharacter containsAtLeastOneSpecialCharacter(final ShouldNotContainRepeatingCharacters shouldNotContainRepeatingCharacters) {
+    public ContainsAtLeastOneSpecialCharacter containsAtLeastOneSpecialCharacter(final ShouldNotContainEmptySpaces shouldNotContainEmptySpaces) {
         final var containsAtLeastOneSpecialCharacter = new ContainsAtLeastOneSpecialCharacter();
-        containsAtLeastOneSpecialCharacter.next(shouldNotContainRepeatingCharacters);
+        containsAtLeastOneSpecialCharacter.next(shouldNotContainEmptySpaces);
         return containsAtLeastOneSpecialCharacter;
     }
 

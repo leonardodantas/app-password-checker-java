@@ -2,7 +2,8 @@ package com.br.app.validation.infra.http.controllers;
 
 import com.br.app.validation.app.usecases.IValidatePassword;
 import com.br.app.validation.infra.http.converters.PasswordConverter;
-import com.br.app.validation.infra.http.requets.PasswordRequest;
+import com.br.app.validation.infra.http.jsons.requets.PasswordRequest;
+import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
+@Api(tags = "Validator")
 @RequestMapping("validation/password")
 public class ValidatePasswordController {
 

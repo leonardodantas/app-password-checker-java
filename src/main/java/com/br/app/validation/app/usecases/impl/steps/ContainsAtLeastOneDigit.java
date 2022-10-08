@@ -1,13 +1,14 @@
 package com.br.app.validation.app.usecases.impl.steps;
 
-import com.br.app.validation.app.usecases.IValidatorChain;
 import com.br.app.validation.app.exceptions.ContainsAtLeastOneDigitException;
+import com.br.app.validation.app.usecases.IValidatorChain;
+import com.br.app.validation.app.utils.RegexPattern;
 import com.br.app.validation.domains.Password;
-
-import java.util.regex.Pattern;
+import lombok.extern.slf4j.Slf4j;
 
 import static java.util.Objects.isNull;
 
+@Slf4j
 public class ContainsAtLeastOneDigit implements IValidatorChain {
 
     private IValidatorChain next;
@@ -15,11 +16,10 @@ public class ContainsAtLeastOneDigit implements IValidatorChain {
     @Override
     public void execute(final Password password) {
 
-        final var pattern = Pattern.compile("\\p{Digit}+");
-        final var matcher = pattern.matcher(password.getPassword());
+        log.info("Execute step 2: ContainsAtLeastOneDigit");
 
-        if (!matcher.find()) {
-            throw new ContainsAtLeastOneDigitException(String.format("Password %s password must contain at least one digit", password.getPassword()));
+        if (!RegexPattern.containsDigit(password.getPassword())) {
+            throw new ContainsAtLeastOneDigitException(String.format("Password [%s] password must contain at least one digit", password.getPassword()));
         }
 
         if (!isNull(this.next)) {

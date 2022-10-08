@@ -7,16 +7,16 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @Component
-public class EmptySpacesValidator implements ConstraintValidator<EmptySpacesAnnotation, String> {
+public class InputEmptyValidator implements ConstraintValidator<InputEmptyAnnotation, String> {
 
     @Override
     public boolean isValid(final String value, final ConstraintValidatorContext constraintValidatorContext) {
         if (Strings.isNullOrEmpty(value)) {
-            return false;
+            return true;
         }
 
         final var valueWithoutSpaces = value.replaceAll(" ", "");
 
-        return valueWithoutSpaces.length() == value.length();
+        return valueWithoutSpaces.length() > 0;
     }
 }

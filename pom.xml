@@ -63,14 +63,32 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>12.0</version>
+			<version>31.1-jre</version>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security</groupId>-->
-<!--			<artifactId>spring-security-crypto</artifactId>-->
-<!--			<version>3.1.0.RELEASE</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.9.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.pitest</groupId>
+			<artifactId>pitest-maven</artifactId>
+			<version>1.9.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -85,6 +103,19 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.9.2</version>
+				<configuration>
+					<targetClasses>
+						<param>com.br.app.validation.app.usecases.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>com.br.app.validation.app.usecases.*</param>
+					</targetTests>
 				</configuration>
 			</plugin>
 		</plugins>

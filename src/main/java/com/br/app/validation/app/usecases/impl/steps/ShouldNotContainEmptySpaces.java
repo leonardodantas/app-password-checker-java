@@ -1,27 +1,27 @@
 package com.br.app.validation.app.usecases.impl.steps;
 
-import com.br.app.validation.app.exceptions.ContainsAtLeastOneSpecialCharacterException;
+import com.br.app.validation.app.exceptions.ShouldNotContainEmptySpacesException;
 import com.br.app.validation.app.usecases.IValidatorChain;
-import com.br.app.validation.app.utils.RegexPattern;
 import com.br.app.validation.domains.Password;
 import lombok.extern.slf4j.Slf4j;
 
 import static java.util.Objects.isNull;
 
 @Slf4j
-public class ContainsAtLeastOneSpecialCharacter implements IValidatorChain {
+public class ShouldNotContainEmptySpaces implements IValidatorChain {
 
     private IValidatorChain next;
 
     @Override
     public void execute(final Password password) {
 
-        log.info("Execute step 5: ContainsAtLeastOneSpecialCharacter");
+        log.info("Execute step 6: ShouldNotContainEmptySpaces");
 
-        if (!RegexPattern.containsSpecialCharacter(password.getPassword())) {
-            throw new ContainsAtLeastOneSpecialCharacterException(String.format("Password [%s] must contain at least one special character", password.getPassword()));
+        final var valueWithoutSpaces = password.getPassword().replaceAll(" ", "");
+
+        if(valueWithoutSpaces.length() != password.getPassword().length()) {
+            throw new ShouldNotContainEmptySpacesException(String.format("Password [%s] should not contain empty spaces", password.getPassword()));
         }
-
         if (!isNull(this.next)) {
             this.next.execute(password);
         }

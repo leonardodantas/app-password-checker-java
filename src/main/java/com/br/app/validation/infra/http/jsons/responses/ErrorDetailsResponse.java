@@ -1,4 +1,4 @@
-package com.br.app.validation.infra.http.controllers.responses;
+package com.br.app.validation.infra.http.jsons.responses;
 
 import lombok.Getter;
 
