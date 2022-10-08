@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -23,5 +24,7 @@ public class ErrorResponse {
         return new ErrorResponse(details);
     }
 
-
+    public static ErrorResponse from(final ErrorDetailsResponse details) {
+        return new ErrorResponse(List.of(details));
+    }
 }

@@ -21,9 +21,7 @@ public class ShouldNotContainRepeatingCharacters implements IValidatorChain {
         log.info("Execute step 7: ShouldNotContainRepeatingCharacters");
 
         final var characters = password.getPassword().split("");
-
         final var passwordNoRepetition = new HashSet<String>();
-
         Collections.addAll(passwordNoRepetition, characters);
 
         if(password.getPassword().length() > passwordNoRepetition.size()) {

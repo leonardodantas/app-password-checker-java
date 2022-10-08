@@ -1,9 +1,9 @@
 spring:
   application:
     swagger:
-      title: "APP-VALIDATION-PASSWORD-JAVA"
-      description: "APPLICATION FOR VALIDATION PASSWORD"
-      version: "1.0.0"
+      title: '@name@'
+      description: '@description@'
+      version: '@version@'
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

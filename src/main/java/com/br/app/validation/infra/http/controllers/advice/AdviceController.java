@@ -29,6 +29,13 @@ public class AdviceController {
         return ResponseEntity.badRequest().body(ErrorResponse.from(errors));
     }
 
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handlerRuntimeException(final RuntimeException exception) {
+        final var errors = ErrorDetailsResponse.of(exception.getMessage());
+        return ResponseEntity.badRequest().body(ErrorResponse.from(errors));
+    }
+
     private Collection<ErrorDetailsResponse> getErrorResponses(final Collection<FieldError> fields) {
         return fields.stream()
                 .map(field ->

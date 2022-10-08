@@ -16,4 +16,8 @@ public class ErrorDetailsResponse {
     public static ErrorDetailsResponse of(final String field, final String message) {
         return new ErrorDetailsResponse(field, message);
     }
+
+    public static ErrorDetailsResponse of(final String message) {
+        return new ErrorDetailsResponse("", message);
+    }
 }
