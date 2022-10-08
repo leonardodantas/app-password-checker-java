@@ -67,7 +67,7 @@ seguintes criterios:
 - Ao menos 1 caractere especial: !@#$%^&*()-+
 - Não possuir caracteres repetidos dentro do conjunto
 
-Partindo das premissas anteriores adicionei mais uma validação. A de não aceitar request que contenham um valor
+Partindo das premissas anteriores adicionei mais uma validação. A de não aceitar request que contenham apenas um valor
 vazio " ", adicionei essa validação para deixar o serviço mais rico e apresentar posteriormente mais um tipo de
 validação
 
@@ -135,7 +135,7 @@ comportamental que permite que você passe pedidos por uma
 corrente de handlers. Ao receber um pedido, cada handler
 decide se processa o pedido ou o passa adiante para o próximo
 handler na corrente." Ou seja, para utilizar esse padrão precisamos ter varios beans 
-que após executar a sua etapa de validação chamam um proximo bean, 
+que após executar a sua etapa de validação chamam o proximo bean, 
 e assim sucessivamente, inicialmente criei a interface IValidatorChain,
 nela declarei dois metodos:
 </p>
@@ -177,7 +177,7 @@ como que está classe ficou:
     }
 ```
 <p>
-A execução das validações acontece da seguinte maneira:
+A execução das validações acontecem da seguinte maneira:
 </p>
 
 ```
@@ -193,7 +193,9 @@ A execução das validações acontece da seguinte maneira:
     }
 ```
 Nesse caso, se acontecer de a senha não passar por alguma validação, retornaremos para
-o cliente o valor boolean false.
+o cliente o valor boolean false. Entretando podemos consultar o log,
+para sabermos qual o passo que a validação parou, e qual foi
+a mensagem de erro.
 
 ## SOLID, CLEAN ARCH E BOAS PRATICAS DE PROGRAMAÇÃO.
 <p>
@@ -226,7 +228,7 @@ colocado nessa camada
 - **APP**: Nesta camada encontramos, as nossas execeções de negocio, interfaces de acesso a banco
 de dados e os nossos casos de uso, que segundo Uncle Bob, são as nossas regras de negocio
 referente a aplicação.
-- **DOMAIN**: A camada de domain é a responsavel por conter as regras crucias de negocio
+- **DOMAIN**: A camada de domain é a responsavel por conter as regras crucias de negocio,
 são aquelas regras que sempre existiram na empresa e eram executadas de forma manual. Nesse
 caso em especifico ela não possui nenhuma logica do tipo, e é apenas um modelo de como
 o banco de dados deve guardar as informações
@@ -246,8 +248,8 @@ serviço possui as suas regras de validação de senha. Poderiamos ter uma tabel
 onde poderiamos habilitar ou desabilitar a validação, ao gravar no banco de dados poderiamos
 ter um campo que especifique qual o valor da aplicação que vai ter acesso, como por
 exemplo, DEFAULT, APP_BANK, APP_STORE. Assim ao receber o request para saber se a senha é
-valida, poderiamos receber tambem um header contendo a configuração que vai ser acessada
-no banco de dados, para saber quais são as validações aceitas para esse cenario.
+valida, poderiamos receber tambem um header que nós dirá qual a configuração que vai ser acessada
+no banco de dados, para saber quais serão as validações aceitas para esse cenario.
 - Utilização do redis para se trabalhar com cache e evitar que o usuario envie a mesma senha por diversas vezes,
 derubando servidor.
 
