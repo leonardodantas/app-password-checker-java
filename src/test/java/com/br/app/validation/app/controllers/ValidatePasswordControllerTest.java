@@ -52,7 +52,6 @@ public class ValidatePasswordControllerTest {
         ).andExpect(status().isOk());
     }
 
-
     @Test
     public void testRequestNull() throws Exception {
         final var request = new PasswordRequest();
@@ -63,7 +62,6 @@ public class ValidatePasswordControllerTest {
                 .content(new ObjectMapper().writeValueAsBytes(request))
         ).andExpect(status().isBadRequest());
     }
-
 
     @Test
     public void testRequestWithEmptySpace() throws Exception {
