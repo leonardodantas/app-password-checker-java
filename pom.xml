@@ -11,8 +11,8 @@
     <groupId>com.br</groupId>
     <artifactId>app-validation-password-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>app-validation-password-java</name>
-    <description>Application for validation password</description>
+    <name>app-password-checker-java</name>
+    <description>Application to check passwords</description>
     <properties>
         <java.version>11</java.version>
     </properties>

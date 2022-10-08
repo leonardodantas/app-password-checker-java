@@ -2,8 +2,10 @@ package com.br.app.validation.app.controllers;
 
 import com.br.app.validation.Application;
 import com.br.app.validation.domains.Password;
+import com.br.app.validation.infra.database.PasswordJPARepository;
 import com.br.app.validation.utils.FileRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,17 @@ public class ValidatePasswordControllerTestIntegration {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private PasswordJPARepository passwordRepository;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final FileRepository fileRepository = new FileRepository();
 
+    @After
+    public void after() {
+        passwordRepository.deleteAll();
+    }
 
     @Test
     public void shouldExecuteSuccess() throws Exception {
@@ -49,6 +57,9 @@ public class ValidatePasswordControllerTestIntegration {
         final var result = objectMapper.readValue(responseAsString, Boolean.class);
 
         assertThat(result).isTrue();
+
+        final var passwords = passwordRepository.findAll();
+        assertThat(passwords).isNotEmpty();
     }
 
     @Test
@@ -65,8 +76,10 @@ public class ValidatePasswordControllerTestIntegration {
         final var result = objectMapper.readValue(responseAsString, Boolean.class);
 
         assertThat(result).isFalse();
-    }
 
+        final var passwords = passwordRepository.findAll();
+        assertThat(passwords).isEmpty();
+    }
 
     @Test
     public void shouldValidateContainsAtLeastOneLowercaseLetter() throws Exception {
@@ -82,6 +95,9 @@ public class ValidatePasswordControllerTestIntegration {
         final var result = objectMapper.readValue(responseAsString, Boolean.class);
 
         assertThat(result).isFalse();
+
+        final var passwords = passwordRepository.findAll();
+        assertThat(passwords).isEmpty();
     }
 
     @Test
@@ -100,7 +116,6 @@ public class ValidatePasswordControllerTestIntegration {
         assertThat(result).isFalse();
     }
 
-
     @Test
     public void shouldValidateContainsAtLeastOneUppercaseLetter() throws Exception {
         final var request = fileRepository.getContent("password-invalid-without-uppercase-letter", Password.class);
@@ -115,8 +130,10 @@ public class ValidatePasswordControllerTestIntegration {
         final var result = objectMapper.readValue(responseAsString, Boolean.class);
 
         assertThat(result).isFalse();
-    }
 
+        final var passwords = passwordRepository.findAll();
+        assertThat(passwords).isEmpty();
+    }
 
     @Test
     public void shouldValidateShouldNotContainEmptySpaces() throws Exception {
@@ -132,8 +149,10 @@ public class ValidatePasswordControllerTestIntegration {
         final var result = objectMapper.readValue(responseAsString, Boolean.class);
 
         assertThat(result).isFalse();
-    }
 
+        final var passwords = passwordRepository.findAll();
+        assertThat(passwords).isEmpty();
+    }
 
     @Test
     public void shouldValidateShouldNotContainRepeatingCharacters() throws Exception {
@@ -149,8 +168,10 @@ public class ValidatePasswordControllerTestIntegration {
         final var result = objectMapper.readValue(responseAsString, Boolean.class);
 
         assertThat(result).isFalse();
-    }
 
+        final var passwords = passwordRepository.findAll();
+        assertThat(passwords).isEmpty();
+    }
 
     @Test
     public void shouldValidateCharacterSize() throws Exception {
@@ -166,5 +187,8 @@ public class ValidatePasswordControllerTestIntegration {
         final var result = objectMapper.readValue(responseAsString, Boolean.class);
 
         assertThat(result).isFalse();
+
+        final var passwords = passwordRepository.findAll();
+        assertThat(passwords).isEmpty();
     }
 }
