@@ -38,8 +38,6 @@ http://localhost:8080/swagger-ui/
 
 ## Documentação da API
 
-## VALIDAÇÃO
-
 - ### Validar se uma senha é valida
 
 ```
