@@ -77,7 +77,7 @@ Inicialmente pensei em três possibilidade para a resolução do desafio.
 A primeira com a **criação de anotações personalizadas**:
 <p>Com SpringBoot temos a possibilidade de criar anotações que podem ser bem uteis para validar a entrada de dados.
 Tal conceito já é utilizado pelo BeanValidation, quando por exemplo usamos anotações como @NotNull, @NotBlank, @Positive, etc.
-Esse conceito foi empregado em uma validação a mais que eu adicionei no projeto, e pode ser verifica a sua utilização
+Esse conceito foi empregado em uma validação a mais que eu adicionei no projeto, e pode ser verificada a sua implementação
 na @interface InputEmptyAnnotation e a sua empregabilidade pode ser vista na classe PasswordRequest. Nesse caso em especifico
 a validação lança a exception MethodArgumentNotValidException que é tratada na classe AdviceController, diferente das outras
 validações que a resposta é um boolean true para senha valida e false para uma senha invalida, nesse caso em especifico
@@ -102,7 +102,7 @@ A segunda é a **utilização de um forEach pelas classes de validação**:
 <p>
 Para resolver o problema com essa solução precisamos inicialmente ter um Interface em comum para todas as classes de validação.
 Nesse exemplo teremos a inteface IValidator e para cada validação obrigatoria do projeto implementaremos essa interface. Por fim
-precisamos apenas declarar a collection de IValidator e chamar um forEach. Podemos ter um 
+precisamos apenas declarar a collection de IValidator e chamar um forEach. Podemos ver um 
 exemplo no codigo abaixo.
 </p>
 
@@ -141,7 +141,7 @@ nela declarei dois metodos:
 </p>
 
 - **Execute**: Metodo que irá conter a execução da validação
-- **Next**: Metodo onde conseguiremos setar qual será o pproximo Bean
+- **Next**: Metodo onde conseguiremos setar qual será o proximo Bean
 
 <p>
 Para configurar a inicialização dos beans e qual será o proximo passo de validação, 
@@ -210,7 +210,7 @@ nossa unica tarefa é criar um novo bean e adicioná-lo na corrente. O Dependenc
 pode ser encontrado por exemplo na implementação do repositorio, a interface inicial se
 encontra na camada de app, esta camada não pode enxergar a camada de infra, e nesse caso
 para que a camada de app tenha acesso a camada de infra, utilizamos o principio de inversão
-de dependencia. Por ultimo podemos observar a utilização do principio Interface Segregation Principle,
+de dependencia. Por ultimo podemos observar a utilização do Interface Segregation Principle,
 pois temos interfaces coesas, e quando alguma classe a implementa, fazemos uso de todos
 os metodos disponiveis.
 </p>
@@ -265,7 +265,7 @@ forma:
 <p>
 Pelo fato de usarmos imutabilidade não temos metodos na nossa classe de domain que permitem
 mudar algum atributo, se algum atributo for alterado, um novo objeto é gerado. No trecho
-de cogido a seguir podemos ver a empregabilidade de static factory e metodos que geram um
+de codigo a seguir podemos ver a empregabilidade de static factory e metodos que geram um
 novo objeto no lugar de alterar algum atributo.
 
 ```
@@ -293,7 +293,7 @@ novo objeto no lugar de alterar algum atributo.
 ## PROPOSTAS DE MELHORIA
 
 - No lugar de um retorno booleano, poderiamos ter um status code 204 para quando
-a senha for valida, e um 400 quando a senha for invalida, com a mensagem de erro.
+a senha for valida, e um 400 quando a senha for invalida, com uma mensagem de erro.
 - Em um cenario onde nossa aplicação vai ser acessada por diversos serviços, e que cada
 serviço possui as suas regras de validação de senha. Poderiamos ter uma tabela de configuração,
 onde poderiamos habilitar ou desabilitar a validação, ao gravar no banco de dados poderiamos
@@ -307,16 +307,16 @@ derrubando servidor.
 ## Apêndice
 - Segundo algumas obras da literatura, como o livro Java Efetivo de Joshua Bloch,
 exceções não devem ser utilizadas para controle de fluxo. Na verdade a um grande 
-debate sobre o tema, e até onde uma exceção deve ser usada, Joshua Bloch diz
+debate sobre o tema, e até onde uma exceção deve ser usada para esse proposito, Joshua Bloch diz
 que uma exceção deve ser usada apenas em um caso excepcional. Ao meu ver,
-ao ferir uma validação, uma regra de negocio, faz sentido que uma exceção seja lançada, 
+quando paramos em uma validação, uma regra de negocio, faz sentido que uma exceção seja lançada, 
 entretanto esse pensamento pode mudar de desenvolvedor para desenvolvedor.
 - Se fossemos mais extremistas na utilização de Clean Arch, poderiamos manter a nossa
-classe Password que se encontra na camada de Domains sem nenhuma anotação. Sendo apenas
-uma classe intermediaria, nesse caso, deveriamos criar uma classe PasswordEntity na em 
+classe Password que se encontra na camada de Domains sem nenhuma anotação em relação ao banco de dados, sendo apenas
+uma classe intermediaria, nesse caso, deveriamos criar uma classe PasswordEntity no package 
 database da camada de infra. Entretando isso aumentaria a complexidade do projeto 
 de forma desnecessaria, teriamos mais classes para lidar e mais converters para criar.
-Sendo assim a abordagem atual é suficiente.
+Ao meu ver a abordagem atual é suficiente.
 
 ## Tecnologias
 
