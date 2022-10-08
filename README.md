@@ -241,7 +241,7 @@ muito simples no futuro.
 
 <p>
 Tambem fiz uso de classes imutaveis e dei preferencia para
-static factoy no lugar de construtores publicos. A utilização static factoy
+static factory no lugar de construtores publicos. A utilização de static factory
 é citada no livro Java Efetivo, como uma alternativa a construtores, pois
 neles podemos definir nomes que expliquem como o objeto será criado. Vale destacar, 
 que essa abordagem é utilizada pela propria api do Java, como a API de datas que
@@ -263,9 +263,9 @@ forma:
 ```
 
 <p>
-Pelo fatode usarmos imutabilidade não temos metodos na nossa classe de domain que permitem
+Pelo fato de usarmos imutabilidade não temos metodos na nossa classe de domain que permitem
 mudar algum atributo, se algum atributo for alterado, um novo objeto é gerado. No trecho
-de cogido a seguir podemos ver a empregabilidade de static factoy e metodos que geram um
+de cogido a seguir podemos ver a empregabilidade de static factory e metodos que geram um
 novo objeto no lugar de alterar algum atributo.
 
 ```
@@ -311,7 +311,12 @@ debate sobre o tema, e até onde uma exceção deve ser usada, Joshua Bloch diz
 que uma exceção deve ser usada apenas em um caso excepcional. Ao meu ver,
 ao ferir uma validação, uma regra de negocio, faz sentido que uma exceção seja lançada, 
 entretanto esse pensamento pode mudar de desenvolvedor para desenvolvedor.
-- jogar a classe password para a camada de infra
+- Se fossemos mais extremistas na utilização de Clean Arch, poderiamos manter a nossa
+classe Password que se encontra na camada de Domains sem nenhuma anotação. Sendo apenas
+uma classe intermediaria, nesse caso, deveriamos criar uma classe PasswordEntity na em 
+database da camada de infra. Entretando isso aumentaria a complexidade do projeto 
+de forma desnecessaria, teriamos mais classes para lidar e mais converters para criar.
+Sendo assim a abordagem atual é suficiente.
 
 ## Tecnologias
 
