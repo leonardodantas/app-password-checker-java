@@ -30,11 +30,11 @@ public class Password {
         this.create = create;
     }
 
-    public static Password from(String password) {
+    public static Password from(final String password) {
         return new Password(password);
     }
 
-    public Password valid() {
+    public Password encodePassword() {
         return new Password(new BCryptPasswordEncoder().encode(this.password), true, LocalDateTime.now());
     }
 }

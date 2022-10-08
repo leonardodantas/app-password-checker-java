@@ -31,7 +31,7 @@ public class ValidatePassword implements IValidatePassword {
     }
 
     private boolean savePassword(final Password password) {
-        final var passwordValid = password.valid();
+        final var passwordValid = password.encodePassword();
         passwordRepository.save(passwordValid);
         return true;
     }

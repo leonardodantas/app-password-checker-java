@@ -239,6 +239,57 @@ abstrair o maximo a aplicação, para ser possivel adicionar qualquer validaçã
 muito simples no futuro.
 </p>
 
+<p>
+Tambem fiz uso de classes imutaveis e dei preferencia para
+static factoy no lugar de construtores publicos. A utilização static factoy
+é citada no livro Java Efetivo, como uma alternativa a construtores, pois
+neles podemos definir nomes que expliquem como o objeto será criado. Vale destacar, 
+que essa abordagem é utilizada pela propria api do Java, como a API de datas que
+foi adicionada desde a versão 8 da linguagem, anteriormente a isso, para criar uma
+nova instancia de data o codigo era escrito da seguinte maneira:
+</p>
+
+```
+ Date now = new Date(2022, 10,8, 10,10,10);;
+```
+
+<p>
+A partir da versão 8 do Java, com a nova api de datas, podemos criar uma data da seguinte
+forma:
+</p>
+
+```
+ final var now = LocalDateTime.of(2022, 10,8, 10,10,10);
+```
+
+<p>
+Pelo fatode usarmos imutabilidade não temos metodos na nossa classe de domain que permitem
+mudar algum atributo, se algum atributo for alterado, um novo objeto é gerado. No trecho
+de cogido a seguir podemos ver a empregabilidade de static factoy e metodos que geram um
+novo objeto no lugar de alterar algum atributo.
+
+```
+    private Password(final String password) {
+        this.password = password;
+    }
+
+    private Password(final String password, final boolean isValid, final LocalDateTime create) {
+        this.password = password;
+        this.isValid = isValid;
+        this.create = create;
+    }
+
+    public static Password from(final String password) {
+        return new Password(password);
+    }
+
+    public Password encodePassword() {
+        return new Password(new BCryptPasswordEncoder().encode(this.password), true, LocalDateTime.now());
+    }
+```
+
+</p>
+
 ## PROPOSTAS DE MELHORIA
 
 - No lugar de um retorno booleano, poderiamos ter um status code 204 para quando
@@ -260,6 +311,7 @@ debate sobre o tema, e até onde uma exceção deve ser usada, Joshua Bloch diz
 que uma exceção deve ser usada apenas em um caso excepcional. Ao meu ver,
 ao ferir uma validação, uma regra de negocio, faz sentido que uma exceção seja lançada, 
 entretanto esse pensamento pode mudar de desenvolvedor para desenvolvedor.
+- jogar a classe password para a camada de infra
 
 ## Tecnologias
 
