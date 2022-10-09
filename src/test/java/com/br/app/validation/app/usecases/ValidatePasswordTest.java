@@ -12,7 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -43,8 +44,8 @@ public class ValidatePasswordTest {
         verify(passwordRepository).save(argumentCaptor.capture());
 
         final var result = argumentCaptor.getValue();
-        assertTrue(result.isValid());
-        assertNotNull(result.getCreate());
+        assertThat(result.isValid()).isTrue();
+        assertThat(result.getCreate()).isNotNull();
     }
 
     @Test
@@ -55,6 +56,6 @@ public class ValidatePasswordTest {
 
         final var response = validatePassword.execute(password);
 
-        assertFalse(response);
+        assertThat(response).isFalse();
     }
 }
