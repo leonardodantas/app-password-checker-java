@@ -210,7 +210,7 @@ O single responsibility principle pode ser observado na implementação de class
 coesas, pequenas, e que possuem um unico objetivo para a sua existência, talvez o 
 maior exemplo desse principio seja que para cada validação existe uma classe. O
 open closed principle pode ser visto na ValidatorsChainBeans, onde para adicionar
-um novo tipo de validação, não precisamos nos preocupar com a as demais classes,
+um novo tipo de validação, não precisamos nos preocupar com as demais classes,
 nossa unica tarefa é criar um novo bean e adicioná-lo na corrente. O Dependency Inversion Principle
 pode ser encontrado por exemplo na implementação do repositório, a interface inicial se
 encontra na camada de app, esta camada não pode enxergar a camada de infra, e nesse caso
