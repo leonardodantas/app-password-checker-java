@@ -198,7 +198,7 @@ A execução das validações acontecem da seguinte maneira:
 ```
 
 Nesse caso, se acontecer de a senha não passar por alguma validação, retornaremos para
-o cliente o valor booliana false. Entretanto podemos consultar o log,
+o cliente o valor boleano false. Entretanto podemos consultar o log,
 para sabermos qual o passo que a validação parou, e qual foi
 a mensagem de erro.
 
