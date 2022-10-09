@@ -1,7 +1,7 @@
 package com.br.app.validation.app.usecases;
 
-import com.br.app.validation.app.usecases.impl.steps.ContainsAtLeastOneSpecialCharacter;
 import com.br.app.validation.app.exceptions.ContainsAtLeastOneSpecialCharacterException;
+import com.br.app.validation.app.usecases.impl.steps.ContainsAtLeastOneSpecialCharacter;
 import com.br.app.validation.domains.Password;
 import com.br.app.validation.utils.FileRepository;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,8 +35,8 @@ public class ContainsAtLeastOneSpecialCharacterTest {
 
         verify(next).execute(passwordArgumentCaptor.capture());
         final var result = passwordArgumentCaptor.getValue();
-        assertNotNull(result);
-
+        assertThat(result).isNotNull();
+        assertThat(result.getPassword()).isNotEmpty();
     }
 
     @Test(expected = ContainsAtLeastOneSpecialCharacterException.class)

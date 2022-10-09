@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,7 +35,8 @@ public class ShouldNotContainEmptySpacesTest {
 
         verify(next).execute(passwordArgumentCaptor.capture());
         final var result = passwordArgumentCaptor.getValue();
-        assertNotNull(result);
+        assertThat(result).isNotNull();
+        assertThat(result.getPassword()).isNotEmpty();
     }
 
     @Test(expected = ShouldNotContainEmptySpacesException.class)

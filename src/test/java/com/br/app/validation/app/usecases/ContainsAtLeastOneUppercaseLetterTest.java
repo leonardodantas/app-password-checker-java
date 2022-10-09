@@ -1,6 +1,5 @@
 package com.br.app.validation.app.usecases;
 
-import com.br.app.validation.app.exceptions.ContainsAtLeastOneSpecialCharacterException;
 import com.br.app.validation.app.exceptions.ContainsAtLeastOneUppercaseLetterException;
 import com.br.app.validation.app.usecases.impl.steps.ContainsAtLeastOneUppercaseLetter;
 import com.br.app.validation.domains.Password;
@@ -13,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,14 +28,15 @@ public class ContainsAtLeastOneUppercaseLetterTest {
     private final FileRepository fileRepository = new FileRepository();
 
     @Test
-    public void shouldExecuteSuccess(){
+    public void shouldExecuteSuccess() {
         final var password = fileRepository.getContent("password-valid-complete", Password.class);
 
         containsAtLeastOneUppercaseLetter.execute(password);
 
         verify(next).execute(passwordArgumentCaptor.capture());
         final var result = passwordArgumentCaptor.getValue();
-        assertNotNull(result);
+        assertThat(result).isNotNull();
+        assertThat(result.getPassword()).isNotEmpty();
     }
 
     @Test(expected = ContainsAtLeastOneUppercaseLetterException.class)

@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,8 +36,8 @@ public class CharacterSizeTest {
         verify(next).execute(argumentCaptor.capture());
 
         final var result = argumentCaptor.getValue();
-        assertNotNull(result);
-        assertNotNull(result.getPassword());
+        assertThat(result).isNotNull();
+        assertThat(result.getPassword()).isNotEmpty();
     }
 
     @Test(expected = CharacterSizeException.class)
