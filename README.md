@@ -202,6 +202,17 @@ o cliente o valor boleano false. Entretanto podemos consultar o log,
 para sabermos qual o passo que a validação parou, e qual foi
 a mensagem de erro.
 
+## DETALHES DA SOLUÇÃO.
+<p>
+Cada validação do projeto foi separada em uma classe, e implementa uma
+interface comum entre elas. Segui por essa abordagem para ter classes coesas
+e pequenas. As maiorias das validações foram escritas utilizando Regex, entretanto
+também utilizei outros meios, como por exemplo, para saber se existia
+caracteres repetidos fiz uso da estrutura de dados Set. Cada validação possui
+um log, indicando em qual passo ela está atualmente. Caso o input não passe
+em alguma validação, é lançada uma exception e um log com detalhes do erro.
+</p>
+
 ## SOLID, CLEAN ARCH E BOAS PRATICAS DE PROGRAMAÇÃO.
 <p>
 Para o desenvolvimento do projeto tentei fazer ao máximo o uso de boas práticas. 
