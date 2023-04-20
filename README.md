@@ -1,7 +1,7 @@
 # APP-PASSWORD-CHECKER-JAVA
 
 <p>
-Aplicação back end com Java e SpringBoot que verifica se uma senha é valida se baseando em uma serie de regras.
+Aplicação back-end utilizando Java e Spring Boot que tem como objetivo verificar a validade de senhas com base em uma série de regras. Por meio da implementação de um algoritmo robusto e eficiente, a aplicação é capaz de avaliar a segurança das senhas inseridas pelos usuários e retornar um resultado indicando se a senha é válida ou não.
 </p>
 
 ### :pushpin: Features
