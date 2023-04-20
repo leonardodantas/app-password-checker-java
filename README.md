@@ -100,11 +100,9 @@ conferida abaixo.
 }
 ```
 
-A segunda é a **utilização de um forEach pelas classes de validação**:
+A segunda abordagem é a utilização do método forEach() pelas classes de validação:
 <p>
-Para resolver o problema com essa solução precisamos inicialmente ter um Interface em comum para todas as classes de validação.
-Nesse exemplo teremos a inteface IValidator e para cada validação obrigatória do projeto implementaremos essa interface. Por fim
-precisamos apenas declarar a collection de IValidator e chamar um forEach. Podemos ver um 
+Para resolver o problema com essa solução, é necessário ter uma interface comum para todas as classes de validação. Neste exemplo, usaremos a interface IValidator e implementaremos essa interface para cada validação obrigatória do projeto. Em seguida, declaramos a coleção de IValidator e chamamos o método forEach(). Podemos ver um 
 exemplo no código abaixo.
 </p>
 
@@ -129,31 +127,25 @@ exemplo no código abaixo.
 
 ```
 
-A terceira solução em que pensei, foi a que implementei para resolver o problema, a utilização do **design patterns chain of
-responsibility**:
+A terceira abordagem que consideramos foi a utilização do design pattern Chain of Responsibility.
 
 <p>
-Segundo o livro Mergulho nos padrões de projetos de Alexandre Shvets, 
-"Chain of Responsibility é um padrão de projeto
-comportamental que permite que você passe pedidos por uma
-corrente de handlers. Ao receber um pedido, cada handler
-decide se processa o pedido ou o passa adiante para o próximo
-handler na corrente." Ou seja, para utilizar esse padrão precisamos ter vários beans 
-que após executar a sua etapa de validação chamam o próximo bean, 
-e assim sucessivamente, inicialmente criei a interface IValidatorChain,
-nela declarei dois métodos:
+De acordo com o livro "Mergulho nos Padrões de Projetos", de Alexandre Shvets, "Chain of Responsibility é um padrão comportamental que permite que você passe pedidos por uma corrente de handlers. Ao receber um pedido, cada handler decide se processa o pedido ou o passa adiante para o próximo handler na corrente."
+
+Para aplicar esse padrão, precisamos ter vários componentes que executam a validação em etapas e chamam o próximo componente na sequência, e assim sucessivamente. Inicialmente, criamos a interface IValidatorChain, que declara dois métodos.
+
+Essa abordagem permite uma maior flexibilidade na definição da sequência de validação e na adição ou remoção de componentes. No entanto, é necessário tomar cuidado para evitar o acoplamento excessivo entre os componentes e manter uma boa organização na estrutura de classes.
 </p>
 
 - **Execute**: Método que irá conter a execução da validação
 - **Next**: Método onde conseguiremos atribuir qual será o próximo Bean
 
 <p>
-Para configurar a inicialização dos beans e qual será o próximo passo de validação, 
-criei a classe ValidatorsChainBeans que é anotada com um @Configuration, 
-sendo assim o Spring executará essa classe ao subir o projeto. 
-A seguir defini bean por bean e anotei o primeiro que deveria ser
-executado com um @Primary. No seguinte trecho de código, podemos ver parcialmente
-como que está classe ficou:
+Para definir a sequência de validação e configurar a inicialização dos beans, criei a classe ValidatorsChainBeans. Essa classe foi anotada com @Configuration, o que faz com que o Spring execute-a durante a inicialização do projeto.
+
+Na classe ValidatorsChainBeans, defini cada bean de validação em sua própria função e anotei o primeiro bean que deveria ser executado com @Primary. Dessa forma, o Spring garante que esse bean será o primeiro a ser chamado na sequência de validação.
+
+É importante destacar que a classe ValidatorsChainBeans é uma forma eficiente de organizar a inicialização dos beans e definir a sequência de validação. No entanto, é preciso ter cuidado para manter uma boa organização e evitar o acoplamento excessivo entre os beans.
 </p>
 
 ```
@@ -197,20 +189,13 @@ A execução das validações acontecem da seguinte maneira:
     }
 ```
 
-Nesse caso, se acontecer de a senha não passar por alguma validação, retornaremos para
-o cliente o valor boleano false. Entretanto podemos consultar o log,
-para sabermos qual o passo que a validação parou, e qual foi
-a mensagem de erro.
+Caso a senha não passe por alguma validação, o cliente receberá um retorno booleano false. Entretanto, podemos verificar o log para saber em qual etapa da validação a validação parou e qual foi a mensagem de erro correspondente.
+
+Consultar o log pode ser útil para entender melhor o problema e, eventualmente, tomar medidas para corrigi-lo. É importante monitorar regularmente o log para identificar rapidamente quaisquer problemas e evitar que afetem o desempenho da aplicação.
 
 ## DETALHES DA SOLUÇÃO.
 <p>
-Cada validação do projeto foi separada em uma classe, e implementa uma
-interface comum entre elas. Segui por essa abordagem para ter classes coesas
-e pequenas. As maiorias das validações foram escritas utilizando Regex, entretanto
-também utilizei outros meios, como por exemplo, para saber se existia
-caracteres repetidos fiz uso da estrutura de dados Set. Cada validação possui
-um log, indicando em qual passo ela está atualmente. Caso o input não passe
-em alguma validação, é lançada uma exception e um log com detalhes do erro.
+Para manter as classes do projeto coesas e pequenas, cada validação foi implementada em uma classe separada que implementa uma interface comum a todas elas. Na maioria das vezes, utilizei expressões regulares (Regex) para realizar as validações, mas também empreguei outras técnicas, como a utilização da estrutura de dados Set para verificar a presença de caracteres repetidos. Cada validação possui um log indicando em qual etapa do processo de validação se encontra. Se o input não passar em alguma validação, é lançada uma exception e gerado um log detalhando o erro ocorrido.
 </p>
 
 ## SOLID, CLEAN ARCH E BOAS PRATICAS DE PROGRAMAÇÃO.
@@ -250,20 +235,11 @@ caso em especifico ela não possui nenhuma logica do tipo, e é apenas um modelo
 o banco de dados deve guardar as informações
 
 <p>
-Durante esse projeto busquei empregar as melhores praticas que eu conheço. Dei
-preferências por métodos com corpos pequenos e nomes de classes bem descritivos. Procurei
-abstrair o máximo a aplicação, para ser possível adicionar qualquer validação de forma
-muito simples no futuro.
+Para tornar o projeto mais organizado e fácil de ser mantido, utilizei algumas boas práticas que aprendi ao longo da minha experiência. Adotei o hábito de criar métodos com corpos pequenos e nomes descritivos para facilitar a leitura e compreensão do código. Além disso, busquei abstrair ao máximo a aplicação, permitindo que novas validações possam ser adicionadas facilmente no futuro. Dessa forma, a implementação de novas funcionalidades ou melhorias na aplicação será menos trabalhosa e mais eficiente.
 </p>
 
 <p>
-Também fiz uso de classes imutáveis e dei preferência para
-static factory no lugar de construtores públicos. A utilização de static factory
-é citada no livro Java Efetivo, como uma alternativa a construtores, pois
-neles podemos definir nomes que expliquem como o objeto será criado. Vale destacar, 
-que essa abordagem é utilizada pela própria API do Java, como a API de datas que
-foi adicionada desde a versão 8 da linguagem, anteriormente a isso, para criar uma
-nova instancia de data o código era escrito da seguinte maneira:
+Anteriormente, para criar uma nova instância de data no Java, o código era escrito de forma mais verbosa e menos descritiva. Entretanto, com a introdução da API de datas na versão 8 da linguagem, é possível utilizar static factory methods para criar objetos de forma mais clara e concisa. Essa abordagem é citada no livro Java Efetivo como uma alternativa aos construtores públicos, pois permite definir nomes que expliquem claramente como o objeto será criado. Durante o projeto, utilizei essa abordagem para criar classes imutáveis e com nomes explicativos.
 </p>
 
 ```
